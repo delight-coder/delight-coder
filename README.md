@@ -8,13 +8,7 @@
 
 
 ![](https://streak-stats.demolab.com/?user=delight-coder&theme=dark&hide_border=true)
-<div align="center">
-<!-- STREAK_START -->
-  <p align="center" style="font-size: 80px; margin-bottom: 0;">🔥</p>
-  <h1 align="center" style="border-bottom: none; margin-top: -10px;">0</h1>
-  <p align="center" style="letter-spacing: 2px; color: #8b949e;">DAY STREAK</p>
-<!-- STREAK_END -->
-</div><br/>
+![GitHub Streak](https://streak-stats.demolab.com/?user=delight-coder&theme=dark&hide_border=true&timezone=Africa/Nairobi)<br/>
 ![](https://github-readme-stats.shion.dev/api/top-langs/?username=delight-coder&theme=dark&hide_border=true&include_all_commits=true&count_private=false&layout=compact)
 
 ---
