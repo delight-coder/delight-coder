@@ -1,0 +1,82 @@
+name: Update GitHub Streak
+
+on:
+  schedule:
+    - cron: "0 */6 * * *" # Runs every 6 hours
+  workflow_dispatch:      # Allows you to click "Run" manually
+
+permissions:
+  contents: write
+
+jobs:
+  update-streak:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Calculate streak
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require("fs");
+            const username = "delight-coder"; 
+
+            const query = `
+            query($username: String!) {
+              user(login: $username) {
+                contributionsCollection {
+                  contributionCalendar {
+                    weeks {
+                      contributionDays {
+                        date
+                        contributionCount
+                      }
+                    }
+                  }
+                }
+              }
+            }`;
+
+            const result = await github.graphql(query, { username });
+            const allDays = result.user.contributionsCollection.contributionCalendar.weeks
+                .flatMap(week => week.contributionDays)
+                .reverse();
+
+            // Adjusted for your local time (Nairobi UTC+3)
+            const today = new Date(new Date().getTime() + (3 * 60 * 60 * 1000))
+              .toISOString()
+              .split("T")[0];
+
+            let streak = 0;
+            for (const day of allDays) {
+              if (day.date > today) continue;
+              if (day.contributionCount > 0) {
+                streak++;
+              } else {
+                if (day.date === today) continue;
+                break;
+              }
+            }
+
+            const readme = fs.readFileSync("README.md", "utf8");
+            const newLayout = `<!-- STREAK_START -->
+  <p align="center" style="font-size: 80px; margin-bottom: 0;">🔥</p>
+  <h1 align="center" style="border-bottom: none; margin-top: -10px;">${streak}</h1>
+  <p align="center" style="letter-spacing: 2px; color: #8b949e;">DAY STREAK</p>
+<!-- STREAK_END -->`;
+
+            const updated = readme.replace(
+              /<!-- STREAK_START -->[\s\S]*?<!-- STREAK_END -->/,
+              newLayout
+            );
+
+            fs.writeFileSync("README.md", updated);
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add README.md
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🔥 update streak" && git push)
