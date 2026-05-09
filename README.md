@@ -8,7 +8,7 @@
 
 
 ![](https://streak-stats.demolab.com/?user=delight-coder&theme=dark&hide_border=true)
-![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=delight-coder&theme=dark&hide_border=true)<br/>
+![GitHub Streak](https://streak-stats.demolab.com/?user=delight-coder&theme=dark&hide_border=true&timezone=Africa/Nairobi)<br/>
 ![](https://github-readme-stats.shion.dev/api/top-langs/?username=delight-coder&theme=dark&hide_border=true&include_all_commits=true&count_private=false&layout=compact)
 
 ---
